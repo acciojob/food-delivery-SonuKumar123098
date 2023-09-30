@@ -31,20 +31,20 @@ public class UserController {
 	@GetMapping(path = "/{id}")
 	public UserResponse getUser(@PathVariable("id") String id) throws Exception{
 		UserDto userDto=userService.getUserByUserId(id);
-		UserResponse userResponse=UserTransformer.userDtoToUserResponse(userDto);
+		UserResponse userResponse=UserTransformer.UserDtoToUserResponse(userDto);
 		return userResponse;
 	}
 
 	@PostMapping()
 	public UserResponse createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception{
-		UserDto userDto=userService.createUser(UserTransformer.userDetailRequestModelToUserDto(userDetails));
-		return UserTransformer.userDtoToUserResponse(userDto);
+		UserDto userDto=userService.createUser(UserTransformer.UserDetailRequestModelToUserDto(userDetails));
+		return UserTransformer.UserDtoToUserResponse(userDto);
 	}
 
 	@PutMapping(path = "/{id}")
 	public UserResponse updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails) throws Exception{
-		UserDto userDto=userService.updateUser(id,UserTransformer.userDetailRequestModelToUserDto(userDetails));
-		UserResponse userResponse=UserTransformer.userDtoToUserResponse(userDto);
+		UserDto userDto=userService.updateUser(id,UserTransformer.UserDetailRequestModelToUserDto(userDetails));
+		UserResponse userResponse=UserTransformer.UserDtoToUserResponse(userDto);
 		return userResponse;
 
 	}
@@ -63,7 +63,7 @@ public class UserController {
 		List<UserDto> userDtoList=userService.getUsers();
 		List<UserResponse>userResponseList=new ArrayList<>();
 		for(UserDto userDto:userDtoList){
-			UserResponse userResponse=UserTransformer.userDtoToUserResponse(userDto);
+			UserResponse userResponse=UserTransformer.UserDtoToUserResponse(userDto);
 			userResponseList.add(userResponse);
 		}
 		return userResponseList;

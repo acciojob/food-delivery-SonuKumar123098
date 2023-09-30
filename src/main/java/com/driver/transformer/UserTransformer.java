@@ -8,15 +8,14 @@ import com.driver.shared.dto.UserDto;
 import java.util.UUID;
 
 public class UserTransformer {
-    public static UserDto userDetailRequestModelToUserDto(UserDetailsRequestModel userDetailsRequestModel){
+    public static UserDto UserDetailRequestModelToUserDto(UserDetailsRequestModel userDetailsRequestModel){
         return UserDto.builder()
-                .userId(String.valueOf(UUID.randomUUID()))
                 .email(userDetailsRequestModel.getEmail())
                 .firstName(userDetailsRequestModel.getFirstName())
                 .lastName(userDetailsRequestModel.getLastName())
                 .build();
     }
-    public static UserResponse userDtoToUserResponse(UserDto userDto){
+    public static UserResponse UserDtoToUserResponse(UserDto userDto){
         return UserResponse.builder()
                 .email(userDto.getEmail())
                 .firstName(userDto.getFirstName())
@@ -24,7 +23,7 @@ public class UserTransformer {
                 .lastName(userDto.getLastName())
                 .build();
     }
-    public static UserDto userEntityToUserDto(UserEntity userEntity){
+    public static UserDto UserEntityToUserDto(UserEntity userEntity){
         return UserDto.builder()
                 .lastName(userEntity.getLastName())
                 .id(userEntity.getId()).firstName(userEntity.getFirstName())
@@ -33,4 +32,5 @@ public class UserTransformer {
                 .firstName(userEntity.getFirstName())
                 .build();
     }
+
 }

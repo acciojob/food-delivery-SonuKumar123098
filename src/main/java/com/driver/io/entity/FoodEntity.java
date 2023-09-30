@@ -1,9 +1,6 @@
 package com.driver.io.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
@@ -15,6 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class FoodEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

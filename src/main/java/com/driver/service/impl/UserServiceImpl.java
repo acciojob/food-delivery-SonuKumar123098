@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -24,9 +25,10 @@ public class UserServiceImpl implements UserService{
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
+                .userId(String.valueOf(UUID.randomUUID()))
                 .build();
      UserEntity savedUserEntity=   userRepository.save(userEntity);
-        return user;
+        return UserTransformer.UserEntityToUserDto(savedUserEntity);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class UserServiceImpl implements UserService{
             throw new Exception("user not found");
         }
         UserEntity userEntity=userEntityOptional.get();
-        UserDto userDto= UserTransformer.userEntityToUserDto(userEntity);
+        UserDto userDto= UserTransformer.UserEntityToUserDto(userEntity);
         return userDto;
     }
 
@@ -46,7 +48,7 @@ public class UserServiceImpl implements UserService{
         if(userEntity==null){
             throw new Exception("user not found");
         }
-        UserDto userDto= UserTransformer.userEntityToUserDto(userEntity);
+        UserDto userDto= UserTransformer.UserEntityToUserDto(userEntity);
         return userDto;
     }
 
@@ -56,12 +58,11 @@ public class UserServiceImpl implements UserService{
         if(userEntity==null){
             throw new Exception("user not found");
         }
-        userEntity.setUserId(user.getUserId());
         userEntity.setEmail(user.getEmail());
         userEntity.setFirstName(user.getFirstName());
         userEntity.setLastName(user.getLastName());
         UserEntity userEntity1=userRepository.save(userEntity);
-        UserDto userDto=UserTransformer.userEntityToUserDto(userEntity1);
+        UserDto userDto=UserTransformer.UserEntityToUserDto(userEntity1);
         return userDto;
     }
 
@@ -78,7 +79,7 @@ public class UserServiceImpl implements UserService{
         List<UserEntity>userEntityList=userRepository.getAllUserEntity();
         List<UserDto>userDtoList=new ArrayList<>();
         for(UserEntity userEntity:userEntityList){
-            UserDto userDto=UserTransformer.userEntityToUserDto(userEntity);
+            UserDto userDto=UserTransformer.UserEntityToUserDto(userEntity);
             userDtoList.add(userDto);
         }
         return userDtoList;
