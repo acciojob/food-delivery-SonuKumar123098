@@ -1,17 +1,25 @@
 package com.driver.io.entity;
 
-import java.io.Serializable;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.sql.DataSourceDefinition;
+import javax.persistence.*;
 
 @Entity(name = "orders")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderEntity {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Column(nullable = false)
@@ -28,6 +36,11 @@ public class OrderEntity {
 	
 	@Column(nullable = false)
 	private boolean status;
+	@ManyToOne
+	@JoinColumn
+	UserEntity userEntity;
+	@OneToMany(mappedBy = "orderEntity",cascade = CascadeType.ALL)
+	List<FoodEntity>foodEntities=new ArrayList<>();
 
 	public long getId() {
 		return id;

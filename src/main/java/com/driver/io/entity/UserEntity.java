@@ -1,17 +1,24 @@
 package com.driver.io.entity;
 
-import java.io.Serializable;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserEntity{
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Column(nullable = false)
@@ -25,6 +32,8 @@ public class UserEntity{
 
 	@Column(nullable = false, length = 120, unique = true)
 	private String email;
+	@OneToMany(mappedBy = "userEntity",cascade =CascadeType.ALL )
+	List<OrderEntity>orderEntities=new ArrayList<>();
 
 	public long getId() {
 		return id;

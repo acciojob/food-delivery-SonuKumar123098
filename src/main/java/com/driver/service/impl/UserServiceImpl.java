@@ -1,0 +1,86 @@
+package com.driver.service.impl;
+
+import com.driver.io.entity.UserEntity;
+import com.driver.io.repository.UserRepository;
+import com.driver.service.UserService;
+import com.driver.shared.dto.UserDto;
+import com.driver.transformer.UserTransformer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserServiceImpl implements UserService{
+
+    @Autowired
+    UserRepository userRepository;
+    @Override
+    public UserDto createUser(UserDto user) throws Exception {
+        UserEntity userEntity= UserEntity.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .build();
+     UserEntity savedUserEntity=   userRepository.save(userEntity);
+        return user;
+    }
+
+    @Override
+    public UserDto getUser(String email) throws Exception {
+        Optional<UserEntity> userEntityOptional=userRepository.findByEmail(email);
+        if(!userEntityOptional.isPresent()){
+            throw new Exception("user not found");
+        }
+        UserEntity userEntity=userEntityOptional.get();
+        UserDto userDto= UserTransformer.userEntityToUserDto(userEntity);
+        return userDto;
+    }
+
+    @Override
+    public UserDto getUserByUserId(String userId) throws Exception {
+        UserEntity userEntity=userRepository.findByUserId(userId);
+        if(userEntity==null){
+            throw new Exception("user not found");
+        }
+        UserDto userDto= UserTransformer.userEntityToUserDto(userEntity);
+        return userDto;
+    }
+
+    @Override
+    public UserDto updateUser(String userId, UserDto user) throws Exception {
+        UserEntity userEntity=userRepository.findByUserId(userId);
+        if(userEntity==null){
+            throw new Exception("user not found");
+        }
+        userEntity.setUserId(user.getUserId());
+        userEntity.setEmail(user.getEmail());
+        userEntity.setFirstName(user.getFirstName());
+        userEntity.setLastName(user.getLastName());
+        UserEntity userEntity1=userRepository.save(userEntity);
+        UserDto userDto=UserTransformer.userEntityToUserDto(userEntity1);
+        return userDto;
+    }
+
+    @Override
+    public void deleteUser(String userId) throws Exception {
+        UserEntity userEntity=userRepository.findByUserId(userId);
+        if(userEntity==null)
+            throw new Exception("user not found");
+        userRepository.deleteById(userEntity.getId());
+    }
+
+    @Override
+    public List<UserDto> getUsers() {
+        List<UserEntity>userEntityList=userRepository.getAllUserEntity();
+        List<UserDto>userDtoList=new ArrayList<>();
+        for(UserEntity userEntity:userEntityList){
+            UserDto userDto=UserTransformer.userEntityToUserDto(userEntity);
+            userDtoList.add(userDto);
+        }
+        return userDtoList;
+    }
+}

@@ -28,7 +28,6 @@ public class OrderController {
 		
 		return null;
 	}
-		
 	@PutMapping(path="/{id}")
 	public OrderDetailsResponse updateOrder(@PathVariable String id, @RequestBody OrderDetailsRequestModel order) throws Exception{
 		

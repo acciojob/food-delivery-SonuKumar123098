@@ -1,10 +1,18 @@
 package com.driver.ui.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import com.driver.io.entity.UserEntity;
 import com.driver.model.request.UserDetailsRequestModel;
 import com.driver.model.response.OperationStatusModel;
 import com.driver.model.response.UserResponse;
+import com.driver.service.UserService;
+import com.driver.shared.dto.UserDto;
+import com.driver.transformer.UserTransformer;
+import org.modelmapper.internal.bytebuddy.dynamic.DynamicType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,34 +26,47 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
+	@Autowired
+	UserService userService;
 	@GetMapping(path = "/{id}")
-	public UserResponse getUser(@PathVariable String id) throws Exception{
-
-		return null;
+	public UserResponse getUser(@PathVariable("id") String id) throws Exception{
+		UserDto userDto=userService.getUserByUserId(id);
+		UserResponse userResponse=UserTransformer.userDtoToUserResponse(userDto);
+		return userResponse;
 	}
 
 	@PostMapping()
 	public UserResponse createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception{
-
-		return null;
+		UserDto userDto=userService.createUser(UserTransformer.userDetailRequestModelToUserDto(userDetails));
+		return UserTransformer.userDtoToUserResponse(userDto);
 	}
 
 	@PutMapping(path = "/{id}")
 	public UserResponse updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails) throws Exception{
+		UserDto userDto=userService.updateUser(id,UserTransformer.userDetailRequestModelToUserDto(userDetails));
+		UserResponse userResponse=UserTransformer.userDtoToUserResponse(userDto);
+		return userResponse;
 
-		return null;
 	}
 
 	@DeleteMapping(path = "/{id}")
 	public OperationStatusModel deleteUser(@PathVariable String id) throws Exception{
-
-		return null;
+		userService.deleteUser(id);
+		OperationStatusModel operationStatusModel=new OperationStatusModel();
+		operationStatusModel.setOperationName("delete");
+		operationStatusModel.setOperationResult("deleted successfully");
+		return operationStatusModel;
 	}
 	
 	@GetMapping()
 	public List<UserResponse> getUsers(){
-
-		return null;
+		List<UserDto> userDtoList=userService.getUsers();
+		List<UserResponse>userResponseList=new ArrayList<>();
+		for(UserDto userDto:userDtoList){
+			UserResponse userResponse=UserTransformer.userDtoToUserResponse(userDto);
+			userResponseList.add(userResponse);
+		}
+		return userResponseList;
 	}
 	
 }
