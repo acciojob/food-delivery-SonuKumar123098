@@ -26,7 +26,7 @@ public class FoodController {
 	FoodService foodService;
 
 	@GetMapping(path="/{id}")
-	public FoodDetailsResponse getFood(@PathVariable String id) throws Exception{
+	public FoodDetailsResponse getFood(@PathVariable("id") String id) throws Exception{
 		FoodDto foodDto=foodService.getFoodById(id);
 		return FoodTransformer.FoodDtoToFoodDetailsResponse(foodDto);
 	}
@@ -38,13 +38,13 @@ public class FoodController {
 	}
 
 	@PutMapping(path="/{id}")
-	public FoodDetailsResponse updateFood(@PathVariable String id, @RequestBody FoodDetailsRequestModel foodDetails) throws Exception{
+	public FoodDetailsResponse updateFood(@PathVariable("id") String id, @RequestBody FoodDetailsRequestModel foodDetails) throws Exception{
 		FoodDto foodDto=foodService.updateFoodDetails(id,FoodTransformer.FoodDetailsRequestModelToFoodDto(foodDetails));
 		return FoodTransformer.FoodDtoToFoodDetailsResponse(foodDto);
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public OperationStatusModel deleteFood(@PathVariable String id) throws Exception{
+	public OperationStatusModel deleteFood(@PathVariable("id") String id) throws Exception{
 		foodService.deleteFoodItem(id);
 		OperationStatusModel operationStatusModel=new OperationStatusModel();
 		operationStatusModel.setOperationResult("food item deleted successfully");

@@ -25,7 +25,7 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	@GetMapping(path="/{id}")
-	public OrderDetailsResponse getOrder(@PathVariable String id) throws Exception{
+	public OrderDetailsResponse getOrder(@PathVariable("id") String id) throws Exception{
 		OrderDto orderDto=orderService.getOrderById(id);
 		return OrderTransformer.OrderDtoToOrderDetailsResponse(orderDto);
 	}
@@ -36,13 +36,13 @@ public class OrderController {
 		return OrderTransformer.OrderDtoToOrderDetailsResponse(orderDto);
 	}
 	@PutMapping(path="/{id}")
-	public OrderDetailsResponse updateOrder(@PathVariable String id, @RequestBody OrderDetailsRequestModel order) throws Exception {
+	public OrderDetailsResponse updateOrder(@PathVariable("id") String id, @RequestBody OrderDetailsRequestModel order) throws Exception {
 		OrderDto orderDto=orderService.updateOrderDetails(id,OrderTransformer.OrderDetailsRequestModelToOrderDto(order));
 		return OrderTransformer.OrderDtoToOrderDetailsResponse(orderDto);
 	}
 	
 	@DeleteMapping(path = "/{id}")
-	public OperationStatusModel deleteOrder(@PathVariable String id) throws Exception {
+	public OperationStatusModel deleteOrder(@PathVariable("id") String id) throws Exception {
 		orderService.deleteOrder(id);
 		OperationStatusModel operationStatusModel=new OperationStatusModel();
 		operationStatusModel.setOperationName("delete");

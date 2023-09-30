@@ -42,7 +42,7 @@ public class UserController {
 	}
 
 	@PutMapping(path = "/{id}")
-	public UserResponse updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails) throws Exception{
+	public UserResponse updateUser(@PathVariable("id") String id, @RequestBody UserDetailsRequestModel userDetails) throws Exception{
 		UserDto userDto=userService.updateUser(id,UserTransformer.UserDetailRequestModelToUserDto(userDetails));
 		UserResponse userResponse=UserTransformer.UserDtoToUserResponse(userDto);
 		return userResponse;
@@ -50,7 +50,7 @@ public class UserController {
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public OperationStatusModel deleteUser(@PathVariable String id) throws Exception{
+	public OperationStatusModel deleteUser(@PathVariable("id") String id) throws Exception{
 		userService.deleteUser(id);
 		OperationStatusModel operationStatusModel=new OperationStatusModel();
 		operationStatusModel.setOperationName("delete");
