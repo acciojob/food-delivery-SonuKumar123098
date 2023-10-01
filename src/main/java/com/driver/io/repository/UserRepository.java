@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<UserEntity, Long> {
-	Optional<UserEntity> findByEmail(String email);
+	UserEntity findByEmail(String email);
 	UserEntity findByUserId(String userId);
 
 	void deleteByUserId(String userId);

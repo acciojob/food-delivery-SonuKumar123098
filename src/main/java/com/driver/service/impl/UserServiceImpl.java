@@ -33,11 +33,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto getUser(String email) throws Exception {
-        Optional<UserEntity> userEntityOptional=userRepository.findByEmail(email);
-        if(!userEntityOptional.isPresent()){
+        UserEntity userEntity=userRepository.findByEmail(email);
+        if(userEntity==null){
             throw new Exception("user not found");
         }
-        UserEntity userEntity=userEntityOptional.get();
         UserDto userDto= UserTransformer.UserEntityToUserDto(userEntity);
         return userDto;
     }
