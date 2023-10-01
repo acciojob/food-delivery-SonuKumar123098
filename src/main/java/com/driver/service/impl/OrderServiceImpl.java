@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService{
         OrderEntity orderEntity= OrderTransformer.OrderDtoToOrderEntity(order);
         orderEntity.setUserEntity(userEntity);
         for(String item:order.getItems()){
-            orderEntity.getFoodEntities().add(foodRepository.findByFoodId(item));
+            orderEntity.addFoodEntities(foodRepository.findByFoodId(item));
         }
         OrderEntity orderEntity1=orderRepository.save(orderEntity);
         return OrderTransformer.OrderEntityToOrderDto(orderEntity1);

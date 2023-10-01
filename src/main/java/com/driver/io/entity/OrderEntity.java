@@ -45,6 +45,12 @@ public class OrderEntity {
 	public long getId() {
 		return id;
 	}
+	public void addFoodEntities(FoodEntity foodEntity){
+		if(foodEntities==null){
+			foodEntities=new ArrayList<>();
+		}
+		this.foodEntities.add(foodEntity);
+	}
 
 	public void setId(long id) {
 		this.id = id;
