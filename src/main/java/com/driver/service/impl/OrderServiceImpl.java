@@ -33,6 +33,8 @@ public class OrderServiceImpl implements OrderService{
             orderEntity.addFoodEntities(foodRepository.findByFoodId(item));
         }
         OrderEntity orderEntity1=orderRepository.save(orderEntity);
+        userEntity.addOrderEntitty(orderEntity1);
+        userRepository.save(userEntity);
         return OrderTransformer.OrderEntityToOrderDto(orderEntity1);
     }
 
