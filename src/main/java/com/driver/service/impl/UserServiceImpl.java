@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService{
         UserEntity userEntity=userRepository.findByUserId(userId);
         if(userEntity==null)
             throw new Exception("user not found");
-        userRepository.deleteById(userEntity.getId());
+        userRepository.delete(userEntity);
     }
 
     @Override

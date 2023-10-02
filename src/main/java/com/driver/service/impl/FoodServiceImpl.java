@@ -53,7 +53,7 @@ public class FoodServiceImpl implements FoodService{
         if(foodEntity==null) {
             throw new Exception("food not found");
         }
-        foodRepository.deleteById(foodEntity.getId());
+        foodRepository.delete(foodEntity);
     }
 
     @Override
