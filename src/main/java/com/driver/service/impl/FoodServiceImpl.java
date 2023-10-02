@@ -58,7 +58,7 @@ public class FoodServiceImpl implements FoodService{
 
     @Override
     public List<FoodDto> getFoods() {
-        List<FoodEntity>foodEntities=foodRepository.getAllFoodEntity();
+        List<FoodEntity>foodEntities= (List<FoodEntity>) foodRepository.findAll();
         List<FoodDto>foodDtos=new ArrayList<>();
         for(FoodEntity foodEntity:foodEntities){
             FoodDto foodDto=FoodTransformer.FoodEntityToFoodDto(foodEntity);

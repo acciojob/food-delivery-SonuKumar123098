@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDto> getUsers() {
-        List<UserEntity>userEntityList=userRepository.getAllUserEntity();
+        List<UserEntity>userEntityList= (List<UserEntity>) userRepository.findAll();
         List<UserDto>userDtoList=new ArrayList<>();
         for(UserEntity userEntity:userEntityList){
             UserDto userDto=UserTransformer.UserEntityToUserDto(userEntity);

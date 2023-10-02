@@ -84,7 +84,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<OrderDto> getOrders() {
-        List<OrderEntity>orderEntities=orderRepository.getAllOrders();
+        List<OrderEntity>orderEntities= (List<OrderEntity>) orderRepository.findAll();
         List<OrderDto>orderDtos=new ArrayList<>();
         for(OrderEntity orderEntity:orderEntities){
             OrderDto orderDto=OrderTransformer.OrderEntityToOrderDto(orderEntity);
