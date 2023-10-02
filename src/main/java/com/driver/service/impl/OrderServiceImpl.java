@@ -66,9 +66,11 @@ public class OrderServiceImpl implements OrderService{
             if(foodEntity==null){
                 throw new Exception("food item not found");
             }
-            orderEntity.getFoodEntities().add(foodEntity);
+            orderEntity.addFoodEntities(foodEntity);
         }
         OrderEntity saved=orderRepository.save(orderEntity);
+        userEntity.addOrderEntitty(saved);
+        userRepository.save(userEntity);
         return OrderTransformer.OrderEntityToOrderDto(saved);
 
     }

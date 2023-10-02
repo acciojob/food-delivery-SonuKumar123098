@@ -14,8 +14,8 @@ public interface UserRepository extends PagingAndSortingRepository<UserEntity, L
 	UserEntity findByEmail(String email);
 	UserEntity findByUserId(String userId);
 
-	void deleteByUserId(String userId);
+//	void deleteByUserId(String userId);
 
-	@Query(value = "select * from users",nativeQuery = true)
-	List<UserEntity> getAllUserEntity();
+//	@Query(value = "select * from users",nativeQuery = true)
+//	List<UserEntity> getAllUserEntity();
 }
